@@ -1,0 +1,13 @@
+
+{
+  "name": "GAMECHAT Live Streaming",
+  "short_name": "GAMECHAT",
+  "description": "Une communauté pour partager ses passions en direct.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#090b16",
+  "theme_color": "#090b16",
+  "lang": "fr"
+}
