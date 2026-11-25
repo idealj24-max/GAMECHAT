@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090b16">
+  <meta name="description" content="GAMECHAT - Découvre les lives, échange et partage tes passions.">
+  <title>GAMECHAT - Live Streaming</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+<header class="topbar">
+  <a href="#" class="logo" onclick="showPage('home')">GAME<span>CHAT</span></a>
+
+  <div class="header-actions">
+    <span class="wallet">🪙 <b id="tokenBalance">0</b></span>
+    <button id="loginBtn" class="btn secondary" onclick="showPage('auth')">Connexion</button>
+    <button id="logoutBtn" class="btn secondary hidden" onclick="logout()">Quitter</button>
+    <button class="btn primary" onclick="showPage('auth')">Rejoindre</button>
+  </div>
+</header>
+
+<nav class="navigation">
+  <button onclick="showPage('home')">🏠 Accueil</button>
+  <button onclick="showPage('discover')">🔎 Découvrir</button>
+  <button onclick="showPage('create')">📹 Diffuser</button>
+  <button onclick="showPage('wallet')">🪙 Portefeuille</button>
+  <button onclick="showPage('profile')">👤 Profil</button>
+</nav>
+
+<main>
+
+<section id="home" class="page active">
+  <div class="hero">
+    <div class="hero-content">
+      <span class="eyebrow">TON UNIVERS EN DIRECT</span>
+      <h1>Connecte-toi.<br><span>Partage. Vis.</span></h1>
+      <p>Découvre des créateurs, partage tes passions et rencontre une communauté qui te ressemble.</p>
+      <button class="btn primary large" onclick="showPage('discover')">Explorer les lives</button>
+    </div>
+    <div class="hero-art">🔴<br><span>LIVE</span></div>
+  </div>
+
+  <div class="section-heading">
+    <div>
+      <h2>En direct maintenant</h2>
+      <p>Découvre les communautés GAMECHAT.</p>
+    </div>
+    <button class="text-button" onclick="showPage('discover')">Tout voir →</button>
+  </div>
+
+  <div id="liveGrid" class="live-grid"></div>
+
+  <div class="welcome-panel">
+    <h2>Ta passion mérite une scène.</h2>
+    <p>Crée ton espace, rassemble ta communauté et commence à partager.</p>
+    <button class="btn primary" onclick="showPage('create')">Devenir créateur</button>
+  </div>
+</section>
+
+<section id="discover" class="page">
+  <h1>Découvrir</h1>
+  <p class="muted">Trouve les contenus qui t'intéressent.</p>
+
+  <input id="searchInput" class="search" placeholder="Rechercher un live ou une catégorie...">
+
+  <div class="categories">
+    <button onclick="filterCategory('Tous')">Tout</button>
+    <button onclick="filterCategory('Gaming')">🎮 Gaming</button>
+    <button onclick="filterCategory('Musique')">🎵 Musique</button>
+    <button onclick="filterCategory('Discussion')">💬 Discussion</button>
+    <button onclick="filterCategory('Sport')">🏀 Sport</button>
+    <button onclick="filterCategory('Éducation')">📚 Éducation</button>
+  </div>
+
+  <div id="discoverGrid" class="live-grid"></div>
+</section>
+
+<section id="live" class="page">
+  <button class="text-button" onclick="showPage('discover')">← Retour</button>
+  <div class="live-layout">
+    <div>
+      <div class="video-placeholder">
+        <span class="live-label">● EN DIRECT - DÉMO</span>
+        <div id="liveVisual" class="live-visual">📹</div>
+        <h2 id="liveTitle">Bienvenue sur GAMECHAT</h2>
+        <p id="liveCreator">Créateur</p>
+      </div>
+      <div class="live-info">
+        <h2 id="roomTitle">Salle de direct</h2>
+        <p id="roomDescription" class="muted">Bienvenue dans cette communauté.</p>
+        <button class="btn primary" onclick="sendGift()">🎁 Envoyer un cadeau (10 jetons)</button>
+      </div>
+    </div>
+
+    <aside class="chat-panel">
+      <h3>💬 Chat en direct</h3>
+      <div id="chatMessages" class="chat-messages"></div>
+      <form id="chatForm" class="chat-form">
+        <input id="chatInput" placeholder="Écris un message..." maxlength="300" required>
+        <button class="btn primary" type="submit">➤</button>
+      </form>
+    </aside>
+  </div>
+</section>
+
+<section id="auth" class="page">
+  <div class="auth-card">
+    <h1>Bienvenue sur GAMECHAT</h1>
+    <p class="muted">Rejoins notre communauté.</p>
+
+    <div class="auth-tabs">
+      <button id="registerTab" class="selected" onclick="setAuthMode('register')">Inscription</button>
+      <button id="loginTab" onclick="setAuthMode('login')">Connexion</button>
+    </div>
+
+    <form id="authForm">
+      <label>Nom d'utilisateur</label>
+      <input id="username" placeholder="Ton pseudo" minlength="3" maxlength="24" required>
+
+      <label id="emailLabel">Adresse e-mail</label>
+      <input id="email" type="email" placeholder="exemple@email.com" required>
+
+      <label>Mot de passe</label>
+      <input id="password" type="password" placeholder="Au moins 8 caractères" minlength="8" required>
+
+      <button id="authSubmit" class="btn primary full" type="submit">Créer mon compte</button>
+    </form>
+    <p id="authMessage" class="message"></p>
+    <p class="small muted">Prototype de démonstration : ne saisis pas de véritable mot de passe.</p>
+  </div>
+</section>
+
+<section id="wallet" class="page">
+  <h1>Mon portefeuille</h1>
+  <div class="wallet-card">
+    <p>Solde de démonstration</p>
+    <div class="big-balance">🪙 <span id="walletBalance">0</span></div>
+    <p>Jetons GAMECHAT</p>
+  </div>
+
+  <h2>Historique</h2>
+  <div id="transactions" class="transaction-list"></div>
+  <p class="small muted">Aucun achat ou retrait réel n'est possible dans cette version.</p>
+</section>
+
+<section id="create" class="page">
+  <div class="auth-card">
+    <h1>Créer un live</h1>
+    <p class="muted">Prépare ta prochaine diffusion.</p>
+
+    <form id="createForm">
+      <label>Titre du direct</label>
+      <input id="streamTitle" placeholder="Ex : Ma session gaming" maxlength="80" required>
+
+      <label>Catégorie</label>
+      <select id="streamCategory">
+        <option>Gaming</option>
+        <option>Musique</option>
+        <option>Discussion</option>
+        <option>Sport</option>
+        <option>Éducation</option>
+        <option>Autre</option>
+      </select>
+
+      <label>Description</label>
+      <textarea id="streamDescription" placeholder="Présente ton live..." maxlength="300"></textarea>
+
+      <button class="btn primary full" type="submit">Créer mon direct</button>
+    </form>
+    <p id="createMessage" class="message"></p>
+    <p class="small muted">Cette version crée une salle de démonstration. La caméra et la diffusion réelle seront intégrées dans une prochaine étape.</p>
+  </div>
+</section>
+
+<section id="profile" class="page">
+  <div class="auth-card">
+    <div class="avatar">👤</div>
+    <h1 id="profileName">Visiteur</h1>
+    <p id="profileEmail" class="muted">Connecte-toi pour voir ton profil.</p>
+    <p id="profileRole">Membre GAMECHAT</p>
+    <button class="btn secondary full" onclick="logout()">Déconnexion</button>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <a href="#" class="logo">GAME<span>CHAT</span></a>
+  <p>Une communauté. Des passions. Des rencontres.</p>
+  <p class="small">© 2026 GAMECHAT. Tous droits réservés.</p>
+  <p class="small">Respect • Sécurité • Communauté</p>
+</footer>
+
+<div id="toast" class="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
